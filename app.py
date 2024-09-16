@@ -1,12 +1,7 @@
 import streamlit as st
-import cv2
-from pyzbar.pyzbar import decode
+from streamlit_qrcode_scanner import qrcode_scanner
 import youtube_dl
 import vlc
-import tempfile
-import os
-import numpy as np
-import tempfile
 
 # Llista de cançons amb els codis QR corresponents
 canco_list = {
@@ -20,26 +15,7 @@ canco_list = {
 
 }
 
-# Funció per utilitzar la càmera i escanejar QR
-def escanejar_qr_camera():
-    cap = cv2.VideoCapture(0)
-    canco_url = None
 
-    while canco_url is None:
-        _, frame = cap.read()
-        for barcode in decode(frame):
-            qr_code = barcode.data.decode('utf-8')
-            if qr_code in canco_list:
-                canco_url = canco_list[qr_code]
-                break
-
-        cv2.imshow("Escaneja el codi QR", frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    cap.release()
-    cv2.destroyAllWindows()
-    return canco_url
 
 # Funció per obtenir l'enllaç d'àudio des de YouTube
 def obtenir_audio(url):
@@ -69,18 +45,19 @@ def reproduir_canco(url):
 def main():
     st.title("Joc Temazus - Cançons Catalanes")
 
-    # Botó Play per escanejar i reproduir la cançó
-    if st.button("Play"):
-        st.write("Escanejant codi QR...")
+    # Escaneig de QR
+    qr_code = qrcode_scanner(key='qrcode_scanner')
 
-        # Escanejar QR utilitzant la càmera
-        canco_url = escanejar_qr_camera()
-
-        if canco_url:
-            st.write("Cançó trobada! Reproduint...")
+    if qr_code:
+        st.write(f"QR Code: {qr_code}")
+        if qr_code in canco_list:
+            canco_url = canco_list[qr_code]
+            st.write("Cançó trobada! Fes clic per escoltar:")
             player = reproduir_canco(canco_url)
             if st.button("Atura"):
                 player.stop()
+        else:
+            st.write("No s'ha trobat cap codi QR vàlid.")
 
 if __name__ == "__main__":
     main()
