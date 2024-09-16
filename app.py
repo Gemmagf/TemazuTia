@@ -1,3 +1,4 @@
+
 import streamlit as st
 from streamlit_qrcode_scanner import qrcode_scanner
 import youtube_dl
@@ -5,17 +6,13 @@ import vlc
 
 # Llista de cançons amb els codis QR corresponents
 canco_list = {
-    "qr1": "https://www.youtube.com/watch?v=example1",  # Exemple: L'Estaca
-    "qr2": "https://www.youtube.com/watch?v=example2",  # Exemple: Camins
-    "qr3": "https://www.youtube.com/watch?v=example3",  # Exemple: Boig per tu
-    "qr4": "https://www.youtube.com/watch?v=example4",  # Exemple: Bon dia
-    "qr5": "https://www.youtube.com/watch?v=example5",   # Exemple: Amagada primavera
-    "qr6": "https://m.youtube.com/watch?v=WakP10DXiD0"  # Exemple: La Marina - Esta Morena
-
-
+    "https://example.com/qr1": "https://www.youtube.com/watch?v=example1",  # Exemple: L'Estaca
+    "https://example.com/qr2": "https://www.youtube.com/watch?v=example2",  # Exemple: Camins
+    "https://example.com/qr3": "https://www.youtube.com/watch?v=example3",  # Exemple: Boig per tu
+    "https://example.com/qr4": "https://www.youtube.com/watch?v=example4",  # Exemple: Bon dia
+    "https://example.com/qr5": "https://www.youtube.com/watch?v=example5",  # Exemple: Amagada primavera
+    "https://example.com/qr6": "https://m.youtube.com/watch?v=WakP10DXiD0"  # Nova cançó: La Marina - Esta Morena
 }
-
-
 
 # Funció per obtenir l'enllaç d'àudio des de YouTube
 def obtenir_audio(url):
@@ -46,7 +43,7 @@ def main():
     st.title("Joc Temazus - Cançons Catalanes")
 
     # Escaneig de QR
-    qr_code = "https://m.youtube.com/watch?v=WakP10DXiD0" #qrcode_scanner(key='qrcode_scanner')
+    qr_code = qrcode_scanner(key='qrcode_scanner')
 
     if qr_code:
         st.write(f"QR Code: {qr_code}")
@@ -61,3 +58,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
