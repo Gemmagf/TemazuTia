@@ -1,4 +1,3 @@
-
 import streamlit as st
 from streamlit_qrcode_scanner import qrcode_scanner
 import youtube_dl
@@ -40,7 +39,7 @@ def reproduir_canco(url):
 
 # Interfície de l'aplicació Streamlit
 def main():
-    st.title("Joc Temazus - Cançons Catalanes")
+    st.title("Joc de Temazus - Cançons Catalanes")
 
     # Escaneig de QR
     qr_code = qrcode_scanner(key='qrcode_scanner')
@@ -58,4 +57,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
