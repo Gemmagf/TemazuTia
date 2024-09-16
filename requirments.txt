@@ -1,0 +1,6 @@
+streamlit
+opencv-python-headless
+pyzbar
+youtube_dl
+python-vlc
+numpy
