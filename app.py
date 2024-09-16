@@ -6,6 +6,7 @@ import vlc
 import tempfile
 import os
 import numpy as np
+import tempfile
 
 # Llista de cançons amb els codis QR corresponents
 canco_list = {
@@ -13,7 +14,10 @@ canco_list = {
     "qr2": "https://www.youtube.com/watch?v=example2",  # Exemple: Camins
     "qr3": "https://www.youtube.com/watch?v=example3",  # Exemple: Boig per tu
     "qr4": "https://www.youtube.com/watch?v=example4",  # Exemple: Bon dia
-    "qr5": "https://www.youtube.com/watch?v=example5"   # Exemple: Amagada primavera
+    "qr5": "https://www.youtube.com/watch?v=example5",   # Exemple: Amagada primavera
+    "qr6": "https://m.youtube.com/watch?v=WakP10DXiD0"  # Exemple: La Marina - Esta Morena
+
+
 }
 
 # Funció per utilitzar la càmera i escanejar QR
