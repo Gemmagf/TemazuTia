@@ -42,13 +42,7 @@ def main():
     st.title("Joc de Hister - Cançons Catalanes")
 
     # Button to play a random song
-    if st.button("Reprodueix una cançó aleatòria"):
-        song_name = random.choice(list(canco_list.keys()))
-        canco_url = canco_list[song_name]
-        st.write(f"Reproduint: {song_name}")
-        player = reproduir_canco(canco_url)
-        if st.button("Atura"):
-            player.stop()
+    
 
 if __name__ == "__main__":
     main()
