@@ -1,4 +1,5 @@
-streamlit
-streamlit-qrcode-scanner
-youtube_dl
-python-vlc
+streamlit==1.38.0
+pyzbar==0.1.9
+pillow==10.4.0
+youtube_dl==2021.12.17
+python-vlc==3.0.18121
