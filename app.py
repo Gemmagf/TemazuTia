@@ -46,7 +46,7 @@ def main():
     st.title("Joc Temazus - Cançons Catalanes")
 
     # Escaneig de QR
-    qr_code = qrcode_scanner(key='qrcode_scanner')
+    qr_code = "https://m.youtube.com/watch?v=WakP10DXiD0" #qrcode_scanner(key='qrcode_scanner')
 
     if qr_code:
         st.write(f"QR Code: {qr_code}")
