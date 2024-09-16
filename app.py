@@ -1,16 +1,19 @@
 import streamlit as st
-from streamlit_qrcode_scanner import qrcode_scanner
+from PIL import Image
+from pyzbar.pyzbar import decode
+import requests
+from io import BytesIO
 import youtube_dl
 import vlc
 
 # Llista de cançons amb els codis QR corresponents
 canco_list = {
-    "https://example.com/qr1": "https://www.youtube.com/watch?v=example1",  # Exemple: L'Estaca
-    "https://example.com/qr2": "https://www.youtube.com/watch?v=example2",  # Exemple: Camins
-    "https://example.com/qr3": "https://www.youtube.com/watch?v=example3",  # Exemple: Boig per tu
-    "https://example.com/qr4": "https://www.youtube.com/watch?v=example4",  # Exemple: Bon dia
-    "https://example.com/qr5": "https://www.youtube.com/watch?v=example5",  # Exemple: Amagada primavera
-    "https://example.com/qr6": "https://m.youtube.com/watch?v=WakP10DXiD0"  # Nova cançó: La Marina - Esta Morena
+    "https://example.com/qr1": "https://www.youtube.com/watch?v=example1",
+    "https://example.com/qr2": "https://www.youtube.com/watch?v=example2",
+    "https://example.com/qr3": "https://www.youtube.com/watch?v=example3",
+    "https://example.com/qr4": "https://www.youtube.com/watch?v=example4",
+    "https://example.com/qr5": "https://www.youtube.com/watch?v=example5",
+    "https://example.com/qr6": "https://m.youtube.com/watch?v=WakP10DXiD0"
 }
 
 # Funció per obtenir l'enllaç d'àudio des de YouTube
@@ -37,23 +40,36 @@ def reproduir_canco(url):
     player.play()
     return player
 
+# Funció per escanejar el codi QR
+def escanejar_qr(imatge):
+    decoded_objects = decode(imatge)
+    if decoded_objects:
+        return decoded_objects[0].data.decode('utf-8')
+    return None
+
 # Interfície de l'aplicació Streamlit
 def main():
     st.title("Joc de Temazus - Cançons Catalanes")
 
-    # Escaneig de QR
-    qr_code = qrcode_scanner(key='qrcode_scanner')
+    # Pujar imatge
+    uploaded_file = st.file_uploader("Carrega una imatge amb codi QR", type=["jpg", "jpeg", "png"])
 
-    if qr_code:
-        st.write(f"QR Code: {qr_code}")
-        if qr_code in canco_list:
-            canco_url = canco_list[qr_code]
-            st.write("Cançó trobada! Fes clic per escoltar:")
-            player = reproduir_canco(canco_url)
-            if st.button("Atura"):
-                player.stop()
+    if uploaded_file:
+        image = Image.open(uploaded_file)
+        qr_code = escanejar_qr(image)
+
+        if qr_code:
+            st.write(f"QR Code: {qr_code}")
+            if qr_code in canco_list:
+                canco_url = canco_list[qr_code]
+                st.write("Cançó trobada! Fes clic per escoltar:")
+                player = reproduir_canco(canco_url)
+                if st.button("Atura"):
+                    player.stop()
+            else:
+                st.write("No s'ha trobat cap codi QR vàlid.")
         else:
-            st.write("No s'ha trobat cap codi QR vàlid.")
+            st.write("No s'ha pogut escanejar el codi QR.")
 
 if __name__ == "__main__":
     main()
