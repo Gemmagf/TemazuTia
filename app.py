@@ -44,7 +44,7 @@ def check_password():
 
     if not st.session_state.password_entered:
         def set_password():
-            if st.session_state["password"] == "Additius":  # Replace with your actual password
+            if st.session_state["password"] == "Gemma":  # Replace with your actual password
                 st.session_state.password_entered = True
             else:
                 st.session_state.password_entered = False
