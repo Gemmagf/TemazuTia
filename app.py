@@ -94,24 +94,23 @@ if check_password():
 
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2 = st.columns([1, 1])
 
     with col1:
         if st.button("▶️ Play"):
+            st.session_state.show_info = False
+            st.session_state.current_song = None
             if st.session_state.current_song is None:
                 st.session_state.current_song = random.choice(canco_list)
                 st.session_state.show_info = False
 
+   
     with col2:
-        if st.button("⏹️ Stop"):
-            if st.session_state.current_song:
-                st.session_state.current_song = None
-                st.session_state.show_info = False
-
-    with col3:
         if st.button("ℹ️ Show Info"):
             if st.session_state.current_song:
                 st.session_state.show_info = True
+                
+           
 
     if st.session_state.current_song:
         st.markdown(f"""
