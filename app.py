@@ -37,6 +37,13 @@ canco_list = [
     }
 ]
 
+
+def get_embed_url(video_url):
+        video_id = video_url.split('watch?v=')[1]
+        return f"https://www.youtube.com/embed/{video_id}?autoplay=1&loop=1"
+
+
+
 def check_password():
     if 'password_entered' not in st.session_state:
         # First run, show input for password
@@ -54,8 +61,10 @@ def check_password():
         return False
     else:
         return True
+        
 
 if check_password():
+
 
     st.title("Joc de Hister - Cançons Catalanes")
     # Initialize session state variables if not present
@@ -106,6 +115,12 @@ if check_password():
             st.experimental_rerun()  # Refresh to play the song
 
   
+    with col2:
+        if st.button("⏹️ Stop", key='stop_button') and st.session_state.current_song:
+            st.session_state.current_song = None
+            st.session_state.show_info = False
+            st.experimental_rerun()  # Refresh to stop the song
+
 
     with col3:
         if st.button("ℹ️ Show Info", key='info_button'):
@@ -124,8 +139,4 @@ if check_password():
         <iframe class="hidden-iframe" src="{get_embed_url(st.session_state.current_song['url'])}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         """, unsafe_allow_html=True)
 
-
-def get_embed_url(video_url):
-    video_id = video_url.split('watch?v=')[1]
-    return f"https://www.youtube.com/embed/{video_id}?autoplay=1&loop=1"
-
+    
