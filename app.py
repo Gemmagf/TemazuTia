@@ -37,7 +37,25 @@ canco_list = [
     }
 ]
 
-def main():
+def check_password():
+    if 'password_entered' not in st.session_state:
+        # First run, show input for password
+        st.session_state.password_entered = False
+
+    if not st.session_state.password_entered:
+        def set_password():
+            if st.session_state["password"] == "Additius":  # Replace with your actual password
+                st.session_state.password_entered = True
+            else:
+                st.session_state.password_entered = False
+                st.error("Password incorrecta")
+
+        st.text_input("Introdueix la contrasenya:", type="password", key="password", on_change=set_password)
+        return False
+    else:
+        return True
+
+if check_password():
 
     st.title("Joc de Hister - Cançons Catalanes")
     # Initialize session state variables if not present
@@ -106,9 +124,8 @@ def main():
         <iframe class="hidden-iframe" src="{get_embed_url(st.session_state.current_song['url'])}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         """, unsafe_allow_html=True)
 
+
 def get_embed_url(video_url):
     video_id = video_url.split('watch?v=')[1]
     return f"https://www.youtube.com/embed/{video_id}?autoplay=1&loop=1"
 
-if __name__ == "__main__":
-    main()
